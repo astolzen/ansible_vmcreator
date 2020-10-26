@@ -12,5 +12,5 @@ what does it do:
 requires:
 * qemu-kvm,
 * libvirt
-* (optional) DNS-Server with static "dhcp-host=<MAC>:<IP>" declarations
+* (optional) DNS-Server with static `"dhcp-host=<MAC>:<IP>"` declarations
 
