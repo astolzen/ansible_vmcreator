@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  gather_facts: False
+  vars_files:
+  - vars/all.yml
+
+  tasks:
+
+  - name: Shutdown VMs
+    virt: name={{ item.key }}
+          command=shutdown
+    with_dict: "{{ vms }}"
+

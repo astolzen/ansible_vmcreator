@@ -2,28 +2,28 @@
 - hosts: localhost
   gather_facts: False
   vars_files:
-#  - vars/all.yml
-  - vars/x230.yml
-
+  - vars/all.yml
+  
   tasks:
 
   - name: create VM Disks
-    shell: qemu-img create -f qcow2 -b "{{ template_disk }}" "{{ item.key }}".qcow2 chdir="{{ vmdir }}"
-    with_dict: "{{ vms }}"
-
-  - name: inject network-config
-    shell: virt-customize -a  "{{ vmdir }}"/"{{ item.key }}".qcow2 --run-command 'echo "{{ lookup('template', 'ifconfig.j2') }}" > /etc/sysconfig/network-scripts/ifcfg-eth0 && echo "{{ lookup('template', 'hostname.j2') }}" > /etc/hostname'
-    with_dict: "{{ vms }}"
-
-  - name: create Additional Disks
-    shell: qemu-img create -f qcow2 "{{ item.key }}"_addisk.qcow2 "{{ item.value.addisk }}"G chdir="{{ diskdir }}"
-    when: item.value.addisk is defined
+    shell: qemu-img create -f qcow2 -b "{{ template[item.value.tmpl] }}" "{{ item.key }}".qcow2 chdir="{{ vmdir }}"
     with_dict: "{{ vms }}"
 
   - name: Create VMs
     virt: name={{ item.key }}
           command=define
-          xml="{{ lookup('template', 'vm_xml.j2') }}"
+          xml="{{ lookup('template', 'vm_storm1_xml.j2') }}"
+    with_dict: "{{ vms }}"
+
+  - name: create 2nd Disks
+    shell: qemu-img create -f qcow2 "{{ item.key }}"_addisk.qcow2 "{{ item.value.addisk }}"G chdir="{{ vmdir }}"
+    when: item.value.addisk is defined
+    with_dict: "{{ vms }}"
+
+  - name: create 3rd Disks
+    shell: qemu-img create -f qcow2 "{{ item.key }}"_third.qcow2 "{{ item.value.third }}"G chdir="{{ vmdir }}"
+    when: item.value.third is defined
     with_dict: "{{ vms }}"
 
   - name: Start VMs

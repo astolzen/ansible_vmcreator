@@ -2,8 +2,8 @@
 - hosts: localhost
   gather_facts: False
   vars_files:
-#  - vars/all.yml
-  - vars/x230.yml
+          # - vars/all.yml
+  - vars/ast.yml
 
   tasks:
 
@@ -21,7 +21,12 @@
     file: path={{ vmdir }}{{ item.key }}.qcow2 state=absent
     with_dict: "{{ vms }}"
 
-  - name: remove Additional Disks
-    file: path={{ diskdir }}{{ item.key }}_addisk.qcow2 state=absent
+  - name: remove 2nd Disks
+    file: path={{ vmdir }}{{ item.key }}_addisk.qcow2 state=absent
     when: item.value.addisk is defined
+    with_dict: "{{ vms }}"
+
+  - name: remove 3rd Disks
+    file: path={{ vmdir }}{{ item.key }}_third.qcow2 state=absent
+    when: item.value.third is defined
     with_dict: "{{ vms }}"

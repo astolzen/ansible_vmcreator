@@ -37,9 +37,17 @@
 {% if item.value.addisk is defined %}
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='{{ diskdir }}{{ item.key }}_addisk.qcow2'/>
+      <source file='{{ vmdir }}{{ item.key }}_addisk.qcow2'/>
       <target dev='vdb' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x09' function='0x0'/>
+    </disk>
+{% endif %}
+{% if item.value.third is defined %}
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2'/>
+      <source file='{{ vmdir }}{{ item.key }}_third.qcow2'/>
+      <target dev='vdc' bus='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x0B' function='0x0'/>
     </disk>
 {% endif %}
     <controller type='usb' index='0' model='ich9-ehci1'>

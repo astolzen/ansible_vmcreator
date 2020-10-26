@@ -1,0 +1,52 @@
+vmdir: /vm/
+template:
+  rhel: /vm/tmpl/rh74t.qcow2
+  cfme: /vm/tmpl/cfme-rhevm-5.8.1.5-1.x86_64.qcow2
+
+vmnet:
+  netname: tom
+  basemac: 52:54:00:72:05
+qemu:
+  machine: pc-i440fx-2.9
+  cpu: Haswell-noTSX
+  emulator: /usr/bin/qemu-kvm
+vms:
+  ast20:
+    id: 20
+    tmpl: rhel
+    cpu: 2
+    mem: 8388608
+    addisk: 20
+    third: 6
+  ast21:
+    id: 21
+    tmpl: rhel
+    cpu: 2
+    mem: 8388608
+    addisk: 20
+    third: 5
+  ast22:
+    id: 22
+    tmpl: rhel
+    cpu: 2
+    mem: 8388608
+    addisk: 20
+    third: 5
+  ast23:
+    id: 23
+    tmpl: rhel
+    cpu: 2
+    mem: 8388608
+    addisk: 20
+  ast24:
+    id: 24
+    tmpl: rhel
+    cpu: 2
+    mem: 8388608
+    addisk: 20
+  ast29:
+    id: 29
+    tmpl: cfme
+    cpu: 2
+    mem: 8388608
+    addisk: 40
