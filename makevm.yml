@@ -13,7 +13,7 @@
   - name: Create VMs
     virt: name={{ item.key }}
           command=define
-          xml="{{ lookup('template', 'vm_storm1_xml.j2') }}"
+          xml="{{ lookup('template', 'vm_xml.j2') }}"
     with_dict: "{{ vms }}"
 
   - name: create 2nd Disks
